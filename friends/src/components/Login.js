@@ -10,6 +10,8 @@ const initState = {
 
 const Login = (props) => {
   const [formInput, setFormInput] = useState(initState);
+  const [isLoading, setIsLoading] = useState(false);
+
   // console.log(formInput);
   const changeHandler = (e) => {
     setFormInput({
@@ -22,10 +24,12 @@ const Login = (props) => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(formInput)
+
+    setIsLoading(true);
     axios
       .post("http://localhost:5000/api/login", formInput.body)
       .then((res) => {
+        setIsLoading(false);
         localStorage.setItem("token", res.data.payload);
         props.history.push("/friends");
       })
@@ -35,30 +39,36 @@ const Login = (props) => {
   };
 
   return (
-    <form
-      style={{ display: "flex", flexDirection: "column" }}
-      onSubmit={submitHandler}
-    >
-      <label htmlFor="username">
-        <input
-          type="text"
-          id="username"
-          placeholder="username"
-          onChange={changeHandler}
-          value={formInput.body.username}
-        />
-      </label>
-      <label htmlFor="password">
-        <input
-          type="text"
-          id="password"
-          placeholder="password"
-          onChange={changeHandler}
-          value={formInput.body.password}
-        />
-      </label>
-      <button>Login</button>
-    </form>
+    <div>
+      {isLoading ? (
+        <p>Loading now...</p>
+      ) : (
+        <form
+          style={{ display: "flex", flexDirection: "column" }}
+          onSubmit={submitHandler}
+        >
+          <label htmlFor="username">
+            <input
+              type="text"
+              id="username"
+              placeholder="username"
+              onChange={changeHandler}
+              value={formInput.body.username}
+            />
+          </label>
+          <label htmlFor="password">
+            <input
+              type="text"
+              id="password"
+              placeholder="password"
+              onChange={changeHandler}
+              value={formInput.body.password}
+            />
+          </label>
+          <button>Login</button>
+        </form>
+      )}
+    </div>
   );
 };
 
