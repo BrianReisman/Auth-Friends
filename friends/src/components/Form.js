@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const initState = {
@@ -7,8 +7,14 @@ const initState = {
   age: "",
 };
 
-const Form = () => {
+const Form = (props) => {
   const [inputs, setInputs] = useState(initState);
+
+  useEffect(() => {
+    if (props.data) {
+      setInputs(props.data);
+    }
+  }, []);
 
   const changeHandler = (e) => {
     setInputs({
@@ -20,19 +26,23 @@ const Form = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     axios
-    //*so I can, after the endpoint, put a bunch of stuff, the what and headers seprately
-      .post('http://localhost:5000/api/friends', {...inputs, id: (Date.now()/100).toFixed(0)}, {
-        headers: {
-          authorization: localStorage.getItem("token"),
+      //*so I can, after the endpoint, put a bunch of stuff, the what and headers seprately
+      .post(
+        "http://localhost:5000/api/friends",
+        { ...inputs, id: inputs.id || (Date.now() / 100).toFixed(0) },
+        {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
         }
-      })
+      )
       .then((res) => {
-        setInputs(initState)
+        setInputs(initState);
       })
       .catch((err) => {
         console.log(err);
       });
-    window.location.href = '/friends'
+    window.location.href = "/friends";
   };
 
   return (
