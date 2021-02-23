@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, NavLink } from "react-router-dom";
 import Login from "./components/Login";
 import {PrivateRoute} from './components/PrivateRoute';
+import FriendsList from './components/FriendList';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           </li>
         </nav>
 
-        <PrivateRoute path='/' component={FriendsList}/>
+        <PrivateRoute path='/friendslist' component={FriendsList}/>
         <Route path="/login" component={Login} />
       </header>
     </div>
