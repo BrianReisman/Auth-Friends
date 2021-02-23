@@ -56,6 +56,21 @@ const FriendList = (props) => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
 
+  // const deleteHandler = (e) => {
+  //   console.log(e.target.id);
+
+  //   axiosWithAuth()
+  //     .delete(`/api/friends/${e.target.id}`)
+  //     // .delete(`/api/friends/1`)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+
   return (
     <div>
       <form onSubmit={submitHandler}>
@@ -89,7 +104,7 @@ const FriendList = (props) => {
         <button>Join our friends!</button>
       </form>
       {friends.map((friend) => {
-        return <Friend friend={friend} />;
+        return <Friend key={friend.id} friend={friend} />;
       })}
     </div>
   );

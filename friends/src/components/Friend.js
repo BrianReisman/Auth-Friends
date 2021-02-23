@@ -1,23 +1,10 @@
 import React from "react";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-const Friend = ({ friend }) => {
-  const clickHandler = (e) => {
-    console.log(e.target.id);
-
-    axiosWithAuth()
-      .delete(`/api/friends/${e.target.id}`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+const Friend = (props) => {
+  console.log(props.friend);
   return (
-    <div onClick={clickHandler}>
-      <p id={friend.id}>{friend.name}</p>
+    <div>
+      <p id={props.friend.id} onClick={props.deleteHandler}>{props.friend.name}</p>
     </div>
   );
 };
