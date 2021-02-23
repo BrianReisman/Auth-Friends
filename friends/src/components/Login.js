@@ -8,7 +8,6 @@ const initState = {
 
 const Login = (props) => {
   const [form, setForm] = useState(initState);
-  console.log(form);
 
   const submitHandler = (e) => {
     e.preventDefault();
